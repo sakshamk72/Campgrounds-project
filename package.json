@@ -1,13 +1,13 @@
 {
   "name": "yelpcamp",
   "version": "1.0.0",
-  "description": "cool project",
+  "description": "project",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js"
   },
-  "author": "dsc712",
+  "author": "saksham",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.2",
