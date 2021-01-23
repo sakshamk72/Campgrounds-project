@@ -10,10 +10,6 @@ var express     = require("express") ,
                                                      //all mongodb methods like find() , create() , findById() etc will be called using (var Comment)  
     passport    = require("passport"),
     LocalStrategy   = require("passport-local") ,
-    // FacebookStrategy = require('passport-facebook').Strategy,
-    TwitterStrategy = require('passport-twitter').Strategy,
-    GithubStrategy = require('passport-github2').Strategy,
-    GoogleStrategy = require('passport-google-oauth2').Strategy,
     User        = require("./models/user"),
 methodOverride  = require("method-override"),
     flash       = require("connect-flash"),
@@ -43,93 +39,6 @@ app.set("view engine" , "ejs");
 // local strategy
 passport.use(new LocalStrategy(User.authenticate() )) ;
 
-// facebook strategy
-// passport.use(new FacebookStrategy({
-//         clientID: auth.facebook.clientID,
-//         clientSecret: auth.facebook.clientSecret,
-//         callbackURL: auth.facebook.callbackURL
-//     },
-//     function(accessToken, refreshToken, profile, cb) {
-//         User.findOrCreate({ facebookId: profile.id }, function (err, user) {
-//             return cb(err, user);
-//         });
-//     }
-// ));
-
-//twitter strategy
-passport.use(new TwitterStrategy({
-
-         // uncomment it before running in local environment
-         //==================================================
-        // consumerKey: auth.twitter.consumerKey ,
-        // consumerSecret: auth.twitter.consumerSecret ,
-
-        // comment it before running in local environment
-        //=================================================
-        consumerKey: process.env.twitter_key ,
-        consumerSecret: process.env.twitter_secret ,
-        //=================================================
-
-        callbackURL: "https://post-your-yelpcamps.herokuapp.com/auth/twitter/callback" ,
-        passReqToCallback: true
-    },
-    function(accessToken, refreshToken, profile, done) {
-        User.findOrCreate({ twitterId: profile.id }, function (err, user) {
-            return cb(err, user);
-        });
-
-        // process.nextTick(function () {
-        //     return done(null, profile);
-        // });
-    }
-));
-
-// github strategy
-passport.use(new GithubStrategy({
-        // uncomment it before running in local environment
-        //==================================================
-        // clientID: auth.github.clientID ,
-        // clientSecret: auth.github.clientSecret ,
-        //=================================================
-
-
-        // comment it before running in local environment
-        //=================================================
-        clientID: process.env.github_key ,
-        clientSecret: process.env.github_secret ,
-        //================================================
-        callbackURL: "https://post-your-yelpcamps.herokuapp.com/auth/github/callback"
-    },
-    function(accessToken, refreshToken, profile, done) {
-        process.nextTick(function () {
-            return done(null, profile);
-        });
-    }
-));
-
-// google strategy
-passport.use(new GoogleStrategy({
-        // uncomment it before running in local environment
-        //==================================================
-        // clientID: auth.google.clientID ,
-        // clientSecret: auth.google.clientSecret ,
-        //==================================================
-
-        // comment it before running in local environment
-        //=================================================
-        clientID: process.env.google_key ,
-        clientSecret: process.env.google_secret ,
-        //=================================================
-
-        callbackURL: 'https://post-your-yelpcamps.herokuapp.com/auth/google/callback',
-        passReqToCallback: true
-    },
-    function(request, accessToken, refreshToken, profile, done) {
-        process.nextTick(function () {
-            return done(null, profile);
-        });
-    }
-));
 
 //passport configuration
 app.use(require("express-session")({
